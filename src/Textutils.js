@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const Textutils = () => {
     const [text, setText] = useState("");
@@ -21,14 +22,19 @@ const Textutils = () => {
 
     const copy = () => {
         let box = document.getElementById("box");
-        box.select();
-        navigator.clipboard.writeText(box.value);
+
+        if (box.value.length === 0) {
+            toast.error('Text box is empty')
+        } else {
+            navigator.clipboard.writeText(box.value);
+            toast.success('Text copied successfully')
+        }
     };
     return (
         <div>
             <div
                 className="container"
-                style={{ marginTop: "125px", border: "1px solid gray" }}
+                style={{ marginTop: "100px", border: "1px solid gray" }}
             >
                 <div className="row p-4">
                     <form action="">
@@ -62,7 +68,7 @@ const Textutils = () => {
                             cols="30"
                             rows="10"
                             placeholder="Type...."
-                            style={{ resize: "none" ,color }}
+                            style={{ resize: "none", color }}
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                         ></textarea>
@@ -96,7 +102,7 @@ const Textutils = () => {
                             <div className="btn3">
                                 <button
                                     type="button"
-                                    className="btn btn-primary"
+                                    className="btn btn-danger"
                                     onClick={clear}
                                 >
                                     Clear
